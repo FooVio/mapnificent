@@ -14,7 +14,9 @@
     return memo;
   }, {});
 
+  var population;
   function getCountries(selectedLanguages) {
+    population = 0;
     map.updateChoropleth({}, { reset: true });
 
     selectedLanguages.each(function() {
@@ -24,7 +26,6 @@
 
   function fetchCountryInfo(language) {
     $.get('https://restcountries.eu/rest/v2/lang/' + language, function(response) {
-      var population = 0;
       $.each(response, function(index, country) {
           var opts = {};
           opts[country.alpha3Code] = languagesWithColor[language].color;
