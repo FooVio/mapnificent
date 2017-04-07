@@ -1,6 +1,9 @@
 (function() {
   var map = new Datamap({
     element: document.getElementById("map"),
+    geographyConfig: {
+        highlightOnHover: false
+    },
     projection: 'mercator',
     fills: {
       defaultFill: "#CCCCCC"
@@ -18,6 +21,7 @@
   function getCountries(selectedLanguages) {
     population = 0;
     map.updateChoropleth({}, { reset: true });
+    updatePopulation(population);
 
     selectedLanguages.each(function() {
       fetchCountryInfo(this.value);
@@ -33,8 +37,12 @@
           map.updateChoropleth(opts);
       });
 
-      $('#population-count').html(numeral(population).format('0.0a').toUpperCase());
+      updatePopulation(population);
     });
+  }
+
+  function updatePopulation(population) {
+    $('#population-count').html(numeral(population).format('0.0a').toUpperCase());
   }
 
   window.getCountries = getCountries;
