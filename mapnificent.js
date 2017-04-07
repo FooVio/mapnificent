@@ -24,11 +24,15 @@
 
   function fetchCountryInfo(language) {
     $.get('https://restcountries.eu/rest/v2/lang/' + language, function(response) {
+      var population = 0;
       $.each(response, function(index, country) {
           var opts = {};
           opts[country.alpha3Code] = languagesWithColor[language].color;
+          population += country.population;
           map.updateChoropleth(opts);
       });
+
+      $('#population-count').html(numeral(population).format('0a').toUpperCase());
     });
   }
 

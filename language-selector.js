@@ -449,6 +449,18 @@ var languages = {
     }
 };
 
-$.each(languages, function(languageCode, language) {
-  $('#language-selector').append('<option value=' + languageCode + '>' + language.nativeName + ' (' + language.name + ')</option>');
+var sortable = [];
+$.each(languages, function(code, language) {
+  sortable.push({code: code, name: language.name, nativeName: language.nativeName});
+});
+
+sortable.sort( function( a, b ) {
+    a = a.name.toLowerCase();
+    b = b.name.toLowerCase();
+
+    return a < b ? -1 : a > b ? 1 : 0;
+});
+
+$.each(sortable, function(i, lang) {
+  $('#language-selector').append('<option value=' + lang.code + '>' + lang.name + ' (' + lang.nativeName + ')</option>');
 });

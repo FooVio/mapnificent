@@ -8,4 +8,28 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'PT Sans', sans-serif;
+}
+
+#info {
+  position: fixed;
+  bottom: 50px;
+  right: 250px;
+  width: 200px;
+  padding: 10px;
+  text-align: center;
+
+  font-weight: 700;
+  font-size: 16px;
+
+
+  background-color: white;
+  -webkit-box-shadow: 0 0 15px 2px #888;
+  -moz-box-shadow: 0 0 15px 2px #888;
+  box-shadow: 0 0 15px 2px #888;
+}
+
+#title {
+  font-weight: 700;
+  font-size: 25px;
 }
