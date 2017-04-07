@@ -32,7 +32,7 @@
           map.updateChoropleth(opts);
       });
 
-      $('#population-count').html(numeral(population).format('0a').toUpperCase());
+      $('#population-count').html(numeral(population).format('0.0a').toUpperCase());
     });
   }
 
