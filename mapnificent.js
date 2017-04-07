@@ -1,32 +1,37 @@
-var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 30, lng: 0},
-    zoom: 2,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+(function() {
+  var map = new Datamap({
+    element: document.getElementById("map"),
+    projection: 'mercator',
+    fills: {
+      defaultFill: "#CCCCCC"
+    }
   });
 
-  var highlightLayer = new google.maps.FusionTablesLayer({
-    query: {
-      select: 'geometry',
-      from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk'
-    },
-    styles: [
-      {
-        polygonOptions: {
-          fillColor: '#FF0000',
-          fillOpacity: 0.001
-        }
-      },
-      {
-        where: "ISO_2DIGIT IN ('TR', 'DE', 'GB')",
-        polygonOptions: {
-          fillColor: '#0000FF',
-          fillOpacity: 0.5
-        }
-      }
-    ],
-    map: map,
-    suppressInfoWindows: true
-  });
-}
+  var colors = d3.scale.category20();
+  var languagesWithColor = Object.keys(languages).reduce(function(memo, language, index) {
+    memo[language] = languages[language];
+    memo[language].color = colors(index);
+    return memo;
+  }, {});
+
+  function getCountries(selectedLanguages) {
+    map.updateChoropleth({}, { reset: true });
+
+    selectedLanguages.each(function() {
+      fetchCountryInfo(this.value);
+    });
+  }
+
+  function fetchCountryInfo(language) {
+    $.get('https://restcountries.eu/rest/v2/lang/' + language, function(response) {
+      $.each(response, function(index, country) {
+          var opts = {};
+          opts[country.alpha3Code] = languagesWithColor[language].color;
+          map.updateChoropleth(opts);
+      });
+    });
+  }
+
+  window.getCountries = getCountries;
+  window.languagesWithColor = languagesWithColor;
+})();

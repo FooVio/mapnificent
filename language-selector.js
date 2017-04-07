@@ -1,4 +1,4 @@
-{
+var languages = {
     "ps": {
         "name": "Pashto",
         "nativeName": "پښتو"
@@ -447,4 +447,8 @@
         "name": "Northern Ndebele",
         "nativeName": "isiNdebele"
     }
-}
+};
+
+$.each(languages, function(languageCode, language) {
+  $('#language-selector').append('<option value=' + languageCode + '>' + language.nativeName + ' (' + language.name + ')</option>');
+});
